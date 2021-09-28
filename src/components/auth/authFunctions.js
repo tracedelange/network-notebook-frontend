@@ -45,7 +45,7 @@ export const signupUser = async (signUp) => {
     const method = "POST"
     const headers = { "Content-Type": "application/json" }
     const body = signUp
-    const response = await fetch(`/signup`, { method: method, headers: headers, body: JSON.stringify(body) })
+    const response = await fetch(`/signup`, { method: method, withCredentials: true, headers: headers, body: JSON.stringify(body) })
     const data = await response.json()
 
 

@@ -158,3 +158,46 @@ code {
   text-align: center;
   font-size: 3vmin;
 }
+
+.data-header {
+  text-align: center;
+  opacity: .9;
+  font-size: 4vmin;
+}
+.data-table {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  margin: 0%;
+  padding: 0%;
+  margin-left: 4vw;
+  margin-top: 2vh;
+}
+
+.table-row {
+  border: 1px solid #B8BAC8;
+  display: flex;
+  font-size: 3vmin;
+  align-items: center;
+}
+
+
+/* The width of these three columns must equal 76! */
+
+
+.col1 {
+  margin-left: 4vw;
+  width: 15vw;
+}
+.col2 {
+  width: 30vw;
+}
+.col3 {
+  width: 30vw;
+}
+
+.data-entry:hover{
+
+  opacity: 0.75;
+  cursor: default;
+}
