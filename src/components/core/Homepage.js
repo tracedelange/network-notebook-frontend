@@ -1,7 +1,7 @@
 import { Divider, Paper } from '@mui/material'
 import React from 'react'
 import { capitalize } from '../../Globals'
-
+import { NavLink } from 'react-router-dom'
 
 const Homepage = ({ userInfo }) => {
 
@@ -23,15 +23,19 @@ const Homepage = ({ userInfo }) => {
                     <h1 className='main-content-header'>
                         Welcome, {capitalize(userInfo.username)}.
                     </h1>
-                    <h2 className='main-content-stats'>Your contact book contains 37 contacts spread across 10 organizations.</h2>
+                    <h2 className='main-content-stats'>Your profile contains 37 contacts spread across 10 organizations.</h2>
                     <Divider />
                 </div>
                 <ul className='main-content-item-list'>
                     <li>
-                        Contacts
+                        <NavLink to='/contacts'>
+                            Contacts
+                        </NavLink>
                     </li>
                     <li>
-                        Organizations
+                        <NavLink to='/organizations'>
+                            Organizations
+                        </NavLink>
                     </li>
 
                 </ul>

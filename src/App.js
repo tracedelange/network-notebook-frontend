@@ -8,6 +8,8 @@ import { checkIfUserLoggedIn, signupUser } from './components/auth/authFunctions
 import Navbar from './components/core/Navbar';
 import { logoutUser } from './components/auth/authFunctions'
 import Paper from '@mui/material/Paper';
+import Organizations from './components/data/Organizations';
+import Contacts from './components/data/Contacts';
 
 
 function App() {
@@ -69,6 +71,8 @@ function App() {
           backgroundColor: '#B2FFD6'
         }}>
 
+
+          
         <Switch>
           <Route exact path='/signup'>
             {userLoggedIn ?
@@ -98,6 +102,23 @@ function App() {
               <Redirect to='/login' />
             }
           </Route>
+          <Route path='/organizations'>
+            {userLoggedIn ?
+              <Organizations userInfo={userInformation} />
+              :
+              <Redirect to='/login' />
+            }
+          </Route>
+          <Route path='/contacts'>
+            {userLoggedIn ?
+              <Contacts userInfo={userInformation} />
+              :
+              <Redirect to='/login' />
+            }
+          </Route>
+
+
+          
           <Route path='/'>
             <Redirect to='/home' />
           </Route>

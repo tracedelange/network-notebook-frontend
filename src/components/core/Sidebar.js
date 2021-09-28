@@ -57,6 +57,37 @@ export default function TemporaryDrawer() {
 
             </List>
             <Divider />
+            <List
+                sx={{
+                    fontSize: "180%",
+                    marginTop: "10%",
+                    marginBottom: "15%",
+                    display: "flex",
+                    flexDirection: 'column',
+                }}
+            >
+                <NavLink
+                className='sidebar-link'
+                to='/home'>
+                    <ListItem button >
+                        Home
+                    </ListItem>
+                </NavLink>
+                <NavLink
+                className='sidebar-link'
+                to='/contacts'>
+                    <ListItem button >
+                        Contacts
+                    </ListItem>
+                </NavLink>
+                <NavLink
+                className='sidebar-link'
+                to='/organizations'>
+                    <ListItem button >
+                        Organizations
+                    </ListItem>
+                </NavLink>
+            </List>
         </Box>
     );
 

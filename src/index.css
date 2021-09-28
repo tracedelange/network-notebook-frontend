@@ -136,10 +136,15 @@ code {
   font-size: 6vmin;
   padding-left: 10vw;
   padding-top: 4%;
+
 }
 .main-content-item-list li:hover{
   opacity: 0.5;
   cursor: pointer;
+}
+.main-content-item-list li a {
+  color: #412234;
+  text-decoration: none;
 }
 
 .main-content-header {
