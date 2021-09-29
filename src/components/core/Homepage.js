@@ -23,7 +23,7 @@ const Homepage = ({ userInfo }) => {
                     <h1 className='main-content-header'>
                         Welcome, {capitalize(userInfo.username)}.
                     </h1>
-                    <h2 className='main-content-stats'>Your profile contains 37 contacts spread across 10 organizations.</h2>
+                    <h2 className='main-content-stats'>Your notebook contains 37 contacts spread across 10 organizations.</h2>
                     <Divider />
                 </div>
                 <ul className='main-content-item-list'>

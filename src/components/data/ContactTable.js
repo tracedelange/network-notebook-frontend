@@ -1,35 +1,26 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { Divider, Paper } from '@mui/material'
-
-const ContactTable = ({data}) => {
-
-
-    const ContactData = data.map((item) => (
-        <li key={item.id} >
-            <Paper
-            elevation={1}
-            sx={{
-                width: "76vw",
-                height: '6vh',
-                // left: '4vw'
-            }}
-            className='table-row'>
-                <div className='col1 data-entry'>
-                    {item.firstname}
-                </div>
-                <div className='col2 data-entry'>
-                    {item.lastname}
-                </div>
-                <div className='col3 data-entry'>
-                    {item.organization.name}
-                </div>
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import ContactTableRow from './ContactTableRow';
+import plusIcon from '../../assets/add.png'
+import AddContactFormDialog from '../data/AddContactFormDialog'
+import { getOrganizations } from '../../fetchFunctions';
 
 
+const ContactTable = ({ data, reloadContacts }) => {
 
-            </Paper>
-            {/* {item.firstname}   {item.lastname} {item.organization.name} */}
-        </li>
-    )) 
+
+    const ContactData = data.map((item) => <ContactTableRow key={item.id} item={item} />)
+    const [organizations, setOrganizations] = useState({})
+    const [dataLoaded, setDataLoaded] = useState(false)
+    useEffect(()=> {
+        getOrganizations()
+        .then(data => {
+            setOrganizations(data)
+            setDataLoaded(true)
+        })
+    }, [])
+
 
     return (
         <div>
@@ -41,15 +32,21 @@ const ContactTable = ({data}) => {
                     left: '6vw',
                     top: '2vh',
                     height: "80vh",
-                    backgroundColor: '#ECFEF8'
+                    backgroundColor: '#ECFEF8',
+                    // overflowY: 'scroll'
                 }}>
+                <div className='data-header-container'>
                     <h2 className='data-header'>Contacts</h2>
-                    <Divider />
-                    <div className='data-table-container'>
-                        <ul className='data-table'>
-                            {ContactData}
-                        </ul>
-                    </div>
+                    {dataLoaded ? <AddContactFormDialog reloadContacts={reloadContacts} orgs={organizations} data={data} /> : null}
+                </div>
+                {/* <img src={plusIcon} className='add-new-contact-img' alt='Add New Contact' /> */}
+                <Divider />
+                <div className='data-table-container'>
+                    <ul className='data-table'>
+                        <ContactTableRow item={{}} header={true} />
+                        {ContactData}
+                    </ul>
+                </div>
 
 
 

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { getContacts } from '../../assets/fetchFunctions'
+import { getContacts } from '../../fetchFunctions'
 import ContactTable from './ContactTable'
 
 const Contacts = () => {
@@ -9,7 +9,16 @@ const Contacts = () => {
     const [errorsPresent, setErrorsPresent] = useState(false)
     const [errors, setErrors] = useState([])
  
-
+    const reloadContacts = ( ) => {
+        getContacts()
+        .then((response) => {
+            if (response) {
+                setContactData(response)
+            } else {
+                console.log('We got a problem houston')
+            }
+        })
+    }
 
     useEffect(()=> {
 
@@ -23,12 +32,11 @@ const Contacts = () => {
         })
     }, [])
 
-    console.log(contactData)
 
 
     return (
         <div>
-             <ContactTable data={contactData} /> 
+             <ContactTable reloadContacts={reloadContacts} data={contactData} /> 
         </div>
     )
 }

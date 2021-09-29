@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Paper from '@mui/material/Paper';
 import menuIcon from '../../assets/menu.png'
 import Sidebar from '../core/Sidebar'
+import { Link } from 'react-router-dom'
 
 const Navbar = ({ loggedIn, handleLogout }) => {
 
@@ -27,7 +28,9 @@ const Navbar = ({ loggedIn, handleLogout }) => {
                     :
                     null
                 }
-                <h1 id='main-header'>Network Notebook</h1>
+                <Link id='main-header-link' to='/home'>
+                    <h1 id='main-header'>Network Notebook</h1>
+                </Link>
                 {/* <div id='inner-container'> */}
                 {/* </div> */}
             </div>
