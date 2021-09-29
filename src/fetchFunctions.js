@@ -10,8 +10,8 @@ export const getContacts = async () => {
         return data
         
     } else {
-        console.log(response)
-        console.log("Profile Creation Failed")
+        //console.log(response)
+        //console.log("Profile Creation Failed")
         return response
     }
 
@@ -28,8 +28,8 @@ export const getOrganizations = async () => {
         return data
         
     } else {
-        console.log(response)
-        console.log("Profile Creation Failed")
+        //console.log(response)
+        //console.log("Profile Creation Failed")
         return response
     }
 
@@ -47,8 +47,45 @@ export const submitContact = async (contact) => {
         return data
         
     } else {
-        console.log(response)
-        console.log("Contact Post Failed")
+        //console.log(response)
+        //console.log("Contact Post Failed")
+        return response
+    }
+
+}
+
+export const updateContact = async (contact, id) => {
+
+    const method = "PATCH"
+    const headers = { "Content-Type": "application/json" }
+    const response = await fetch(`/contacts/${id}`, { method: method, withCredentials: true, headers: headers, body: JSON.stringify(contact) })
+    const data = await response.json()
+
+    if (response.ok) {
+        return data
+        
+    } else {
+        //console.log(response)
+        //console.log("Contact Update Failed")
+        return response
+    }
+
+}
+
+
+export const deleteContact = async (id) => {
+
+    const method = "DELETE"
+    const headers = { "Content-Type": "application/json" }
+    const response = await fetch(`/contacts/${id}`, { method: method, withCredentials: true, headers: headers })
+    const data = await response.json()
+
+    if (response.ok) {
+        return data
+        
+    } else {
+        //console.log(response)
+        //console.log("Contact Update Failed")
         return response
     }
 

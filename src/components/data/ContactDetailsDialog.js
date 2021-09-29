@@ -9,47 +9,31 @@ import DialogTitle from '@mui/material/DialogTitle';
 import plusIcon from '../../assets/add.png'
 import { MenuItem, InputLabel, Select } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
-import {submitContact} from '../../fetchFunctions'
+import { updateContact, deleteContact } from '../../fetchFunctions'
 
 
-export default function FormDialog({ data, orgs, reloadContacts }) {
+export default function ContactDetailsDialog({ active, handleClose, data, orgs, reloadContacts }) {
 
-    const blankNewContact = {
-        firstname: '',
-        lastname: "",
-        notes: '',
-        organization_id: ''
-    }
-
-    const [open, setOpen] = useState(false);
-    const [readyToSubmit, setReadyToSubmit] = useState(false)
-    const [newContact, setNewContact] = useState(blankNewContact)
+    const [updated, setUpdated] = useState(false)
+    const [updatedContact, setUpdatedContact] = useState({})
 
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-        setNewContact(blankNewContact)
-    };
 
     const handleFormChange = (e) => {
-        setNewContact({
-            ...newContact,
+        setUpdated(true) //maybe add a check to see if updatedContact === Item, in which case updated = false
+
+        setUpdatedContact({
+            ...updatedContact,
             [e.target.id]: e.target.value
         })
     }
 
-    // //console.log(orgs)
-    const orgArray = orgs.map((item) => <MenuItem defaultValue='' value={item.id} key={item.id}>{item.name}</MenuItem>)
 
-    const handleSubmit = () => {
+    const handleUpdateSubmission = () => {
 
-        submitContact(newContact)
-        .then((data) => {
-            if (data.firstname){
+        updateContact(updatedContact, data.id)
+        .then(response => {
+            if (response.firstname){
                 reloadContacts()
             } else {
                 //console.log('looks like we boofed it')
@@ -59,52 +43,47 @@ export default function FormDialog({ data, orgs, reloadContacts }) {
         handleClose()
     }
 
-    useEffect(() => {
-        if (newContact.firstname !== '' && newContact.lastname !== "") {
-            setReadyToSubmit(true)
-        } else {
-            setReadyToSubmit(false)
-        }
-    }, [newContact, open])
+    const handleDeleteClick = () => {
+        deleteContact(data.id)
+        reloadContacts()
+    }
+
+    //console.log(data)
 
     return (
         <div>
-
-            <button className='add-new-contact' onClick={handleClickOpen}>
-                <img src={plusIcon} className='add-new-contact-img' alt='Add New Contact' />
-            </button>
-            <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Add Contact</DialogTitle>
+            <Dialog open={active} onClose={handleClose} onBackdropClick={() => { handleClose() }}>
+                <DialogTitle>Contact Details</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Enter contact information:
+                        View or Edit Contact Details:
                     </DialogContentText>
                     <TextField
-                        autoFocus
                         margin="dense"
                         id="firstname"
                         label="First Name"
                         type="text"
+                        defaultValue={data.firstname}
                         fullWidth
                         variant="standard"
                         onChange={handleFormChange}
                     />
                     <TextField
-                        autoFocus
                         margin="dense"
                         id="lastname"
                         label="Last Name"
                         type="text"
+                        defaultValue={data.lastname}
                         fullWidth
                         variant="standard"
                         onChange={handleFormChange}
                     />
                     <TextField
-                        autoFocus
                         margin="dense"
                         id="notes"
                         label="Notes"
                         type="text"
+                        defaultValue={data.notes}
                         fullWidth
                         variant="standard"
                         onChange={handleFormChange}
@@ -117,17 +96,19 @@ export default function FormDialog({ data, orgs, reloadContacts }) {
                         <Select
                             labelId="org-label"
                             id="organization"
-                            value={newContact.organization_id}
+                            defaultValue={data.organization}
                             label="Organization"
                             onChange={handleFormChange}
                         >
-                            {orgArray}
+
                             <MenuItem value={''}>Add Later</MenuItem>
                         </Select>
                     </FormControl>
+
                 </DialogContent>
                 <DialogActions>
-                    <Button disabled={readyToSubmit ? false : true} onClick={handleSubmit}>Add Contact</Button>
+                    <Button disabled={updated ? false : true} onClick={handleUpdateSubmission}>Update Contact</Button>
+                    <Button onClick={handleDeleteClick}>Delete</Button>
                     <Button onClick={handleClose}>Cancel</Button>
                 </DialogActions>
             </Dialog>

@@ -1,11 +1,22 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {Paper} from '@mui/material'
+import ContactDetailsDialog from '../data/ContactDetailsDialog'
 
-const ContactTableRow = ({item, header=false}) => {
+
+const ContactTableRow = ({item, header=false, orgs, reloadContacts}) => {
+
+
+    const [detailsActive, setDetailsActive] = useState(false)
+
+    // const handleClose = () => {
+    //     setDetailsActive(false)
+    // }
 
     return (
+        <>
+        {header ? null : <ContactDetailsDialog reloadContacts={reloadContacts} orgs={orgs} data={item} active={detailsActive} handleClose={()=>{setDetailsActive(false)}} />}
+        <li onClick={()=> {setDetailsActive(true)}} id={header ? 'header' : item.id} key={header ? 'header' : item.id} >
 
-        <li key={header ? 'header' : item.id} >
             <Paper
                 elevation={1}
                 sx={{
@@ -25,6 +36,7 @@ const ContactTableRow = ({item, header=false}) => {
                 </div>
             </Paper>
         </li>
+        </>
     )
 }
 

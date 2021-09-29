@@ -50,7 +50,7 @@ function App() {
           setUserLoggedIn(true)
           setUserInformation(data)
         } else {
-          console.log('user sign up failed')
+          //console.log('user sign up failed')
         }
       })
 

@@ -4,13 +4,13 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 import ContactTableRow from './ContactTableRow';
 import plusIcon from '../../assets/add.png'
 import AddContactFormDialog from '../data/AddContactFormDialog'
+import ContactDetailsDialog from '../data/ContactDetailsDialog'
 import { getOrganizations } from '../../fetchFunctions';
 
 
 const ContactTable = ({ data, reloadContacts }) => {
 
 
-    const ContactData = data.map((item) => <ContactTableRow key={item.id} item={item} />)
     const [organizations, setOrganizations] = useState({})
     const [dataLoaded, setDataLoaded] = useState(false)
     useEffect(()=> {
@@ -20,8 +20,15 @@ const ContactTable = ({ data, reloadContacts }) => {
             setDataLoaded(true)
         })
     }, [])
+    
+    
+    const handleRowClick = (e) => {
+        //console.log(e.target.parentElement.parentElement.id)
 
 
+    }
+    
+    const ContactData = data.map((item) => <ContactTableRow reloadContacts={reloadContacts} orgs={organizations} key={item.id} item={item} />)
     return (
         <div>
             <Paper
