@@ -16,28 +16,47 @@ export default function ContactDetailsDialog({ active, handleClose, data, orgs, 
 
     const [updated, setUpdated] = useState(false)
     const [updatedContact, setUpdatedContact] = useState({})
-
+    const [selectedOrg, setSelectedOrg] = useState({})
 
 
     const handleFormChange = (e) => {
         setUpdated(true) //maybe add a check to see if updatedContact === Item, in which case updated = false
 
+        //console.log(e.target.id)
         setUpdatedContact({
             ...updatedContact,
             [e.target.id]: e.target.value
         })
+
+
+
+
     }
 
+    const orgList = orgs.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)
+    //console.log('updated contact:')
+    //console.log(updatedContact)
+
+    //console.log('contact data:')
+    //console.log(data)
 
     const handleUpdateSubmission = () => {
 
-        updateContact(updatedContact, data.id)
+        let contactBody = {
+            ...updatedContact,
+            'organization_id': updatedContact.organization
+        }
+
+        delete contactBody.organization
+
+        updateContact(contactBody, data.id)
         .then(response => {
             if (response.firstname){
+                console.log('that worked')
                 reloadContacts()
             } else {
-                //console.log('looks like we boofed it')
-                //console.log('TODO: Add error handling for this case')
+                console.log('looks like we boofed it')
+                console.log('TODO: Add error handling for this case')
             }
         })
         handleClose()
@@ -48,7 +67,7 @@ export default function ContactDetailsDialog({ active, handleClose, data, orgs, 
         reloadContacts()
     }
 
-    //console.log(data)
+    console.log(updatedContact)
 
     return (
         <div>
@@ -84,6 +103,8 @@ export default function ContactDetailsDialog({ active, handleClose, data, orgs, 
                         label="Notes"
                         type="text"
                         defaultValue={data.notes}
+                        multiline
+                        maxRows={4}
                         fullWidth
                         variant="standard"
                         onChange={handleFormChange}
@@ -94,14 +115,17 @@ export default function ContactDetailsDialog({ active, handleClose, data, orgs, 
                     <FormControl fullWidth >
                         <InputLabel id="org-label">Organization</InputLabel>
                         <Select
+                            native
                             labelId="org-label"
                             id="organization"
-                            defaultValue={data.organization}
+                            // defaultValue={data.organization}
                             label="Organization"
                             onChange={handleFormChange}
+                            defaultValue={data.organization.id}
+                            
                         >
-
-                            <MenuItem value={''}>Add Later</MenuItem>
+                            {orgList}
+                            <option value={''}>Add Later</option>
                         </Select>
                     </FormControl>
 

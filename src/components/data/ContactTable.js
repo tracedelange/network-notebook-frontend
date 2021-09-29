@@ -23,7 +23,7 @@ const ContactTable = ({ data, reloadContacts }) => {
     
     
     const handleRowClick = (e) => {
-        //console.log(e.target.parentElement.parentElement.id)
+        ////console.log(e.target.parentElement.parentElement.id)
 
 
     }

@@ -9,7 +9,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import plusIcon from '../../assets/add.png'
 import { MenuItem, InputLabel, Select } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
-import {submitContact} from '../../fetchFunctions'
+import { submitContact } from '../../fetchFunctions'
+import { fontSize } from '@mui/system';
 
 
 export default function FormDialog({ data, orgs, reloadContacts }) {
@@ -24,7 +25,10 @@ export default function FormDialog({ data, orgs, reloadContacts }) {
     const [open, setOpen] = useState(false);
     const [readyToSubmit, setReadyToSubmit] = useState(false)
     const [newContact, setNewContact] = useState(blankNewContact)
-
+    const [selectedOrg, setSelectedOrg] = useState({
+        id: null,
+        name: ''
+    })
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -36,26 +40,45 @@ export default function FormDialog({ data, orgs, reloadContacts }) {
     };
 
     const handleFormChange = (e) => {
-        setNewContact({
-            ...newContact,
-            [e.target.id]: e.target.value
-        })
+
+
+        if (e.target.id) {
+
+            setNewContact({
+                ...newContact,
+                [e.target.id]: e.target.value
+            })
+        } else {
+
+            // //console.log(orgs)
+            const id = orgs.find((item) => item.name === e.target.value)
+            setNewContact({
+                ...newContact,
+                'organization_id': id.id
+            })
+
+            setSelectedOrg(id)
+        }
     }
 
-    // //console.log(orgs)
-    const orgArray = orgs.map((item) => <MenuItem defaultValue='' value={item.id} key={item.id}>{item.name}</MenuItem>)
+
+    const orgArray = orgs.map((item) => <MenuItem value={item.name} key={item.id}>{item.name}</MenuItem>)
+
+
+    //console.log(orgArray)
 
     const handleSubmit = () => {
 
         submitContact(newContact)
-        .then((data) => {
-            if (data.firstname){
-                reloadContacts()
-            } else {
-                //console.log('looks like we boofed it')
-                //console.log('TODO: Add error handling for this case')
-            }
-        })
+            .then((data) => {
+                if (data.firstname) {
+                    reloadContacts()
+                } else {
+                    //console.log('looks like we boofed it')
+                    //console.log('TODO: Add error handling for this case')
+                }
+            })
+        setSelectedOrg({ id: null, name: '' })
         handleClose()
     }
 
@@ -90,7 +113,6 @@ export default function FormDialog({ data, orgs, reloadContacts }) {
                         onChange={handleFormChange}
                     />
                     <TextField
-                        autoFocus
                         margin="dense"
                         id="lastname"
                         label="Last Name"
@@ -100,37 +122,39 @@ export default function FormDialog({ data, orgs, reloadContacts }) {
                         onChange={handleFormChange}
                     />
                     <TextField
-                        autoFocus
                         margin="dense"
                         id="notes"
                         label="Notes"
                         type="text"
                         fullWidth
+                        multiline
+                        maxRows={4}
                         variant="standard"
                         onChange={handleFormChange}
                         sx={{
                             marginBottom: '30px'
                         }}
                     />
-                    <FormControl fullWidth >
+                    <FormControl fullWidth>
                         <InputLabel id="org-label">Organization</InputLabel>
                         <Select
                             labelId="org-label"
                             id="organization"
-                            value={newContact.organization_id}
+                            value={selectedOrg.name}
                             label="Organization"
                             onChange={handleFormChange}
+                            
                         >
-                            {orgArray}
-                            <MenuItem value={''}>Add Later</MenuItem>
-                        </Select>
-                    </FormControl>
-                </DialogContent>
-                <DialogActions>
-                    <Button disabled={readyToSubmit ? false : true} onClick={handleSubmit}>Add Contact</Button>
-                    <Button onClick={handleClose}>Cancel</Button>
-                </DialogActions>
-            </Dialog>
-        </div>
+                        {orgArray}
+                        <MenuItem value={''}>Add Later</MenuItem>
+                    </Select>
+                </FormControl>
+            </DialogContent>
+            <DialogActions>
+                <Button disabled={readyToSubmit ? false : true} onClick={handleSubmit}>Add Contact</Button>
+                <Button onClick={handleClose}>Cancel</Button>
+            </DialogActions>
+        </Dialog>
+        </div >
     );
 }

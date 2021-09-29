@@ -10,11 +10,11 @@ export const checkIfUserLoggedIn = async () => {
         headers: headers,
     })
     const data = await response.json()
-    // //console.log(response)
+    // ////console.log(response)
     if (response.ok) {
         return data
     } else {
-        //console.log("No user logged in.")
+        ////console.log("No user logged in.")
     }
 
 }
@@ -30,11 +30,11 @@ export const logoutUser = async () => {
         headers: headers,
     })
     // const data = await response.json()
-    // //console.log(response)
+    // ////console.log(response)
     // if (response.ok) {
     //     return data
     // } else {
-    //     //console.log("Fetch Failed")
+    //     ////console.log("Fetch Failed")
     // }
 
 }
@@ -53,7 +53,7 @@ export const signupUser = async (signUp) => {
         return data
         
     } else {
-        //console.log("Profile Creation Failed")
+        ////console.log("Profile Creation Failed")
         return response
     }
 

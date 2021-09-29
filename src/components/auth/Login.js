@@ -27,7 +27,7 @@ const Login = ({ updateUserState }) => {
         if (response.ok) {
 
             updateUserState(data)
-            //console.log(data)
+            ////console.log(data)
         } else {
             setErrors(data)
         }
@@ -36,8 +36,8 @@ const Login = ({ updateUserState }) => {
     }
 
     const handleFormChange = (e) => {
-        // //console.log(e.target.value)
-        // //console.log(e.target.name)
+        // ////console.log(e.target.value)
+        // ////console.log(e.target.name)
 
         setLoginCreds({
             ...loginCreds,
