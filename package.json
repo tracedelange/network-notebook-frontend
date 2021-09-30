@@ -1,7 +1,7 @@
 {
   "name": "network-notebook-frontend",
   "version": "0.1.0",
-  "proxy": "http://localhost:3001",
+  "proxy": "https://network-notebook-backend.herokuapp.com/",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.4.1",
