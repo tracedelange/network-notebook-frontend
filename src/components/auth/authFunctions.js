@@ -1,9 +1,9 @@
-
+import { baseURL } from "../../Globals"
 export const checkIfUserLoggedIn = async () => {
 
     const method = "GET"
     const headers = { "Content-Type": "application/json" }
-    const response = await fetch(`/me`, {
+    const response = await fetch(`${baseURL}/me`, {
         method: method,
         withCredentials: true,
         headers: headers,
@@ -23,7 +23,7 @@ export const logoutUser = async () => {
 
     const method = "DELETE"
     const headers = { "Content-Type": "application/json" }
-    const response = await fetch(`/logout`, {
+    const response = await fetch(`${baseURL}/logout`, {
         method: method,
         withCredentials: true,
         headers: headers,
@@ -37,7 +37,7 @@ export const signupUser = async (signUp) => {
     const method = "POST"
     const headers = { "Content-Type": "application/json" }
     const body = signUp
-    const response = await fetch(`/signup`, { method: method, withCredentials: true, headers: headers, body: JSON.stringify(body) })
+    const response = await fetch(`${baseURL}/signup`, { method: method, withCredentials: true, headers: headers, body: JSON.stringify(body) })
     const data = await response.json()
 
 

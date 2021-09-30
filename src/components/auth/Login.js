@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import Paper from '@mui/material/Paper';
 import { TextField } from '@mui/material';
 import { Button } from '@material-ui/core'
+import { baseURL } from '../../Globals';
 
 const Login = ({ updateUserState }) => {
 
@@ -19,7 +20,7 @@ const Login = ({ updateUserState }) => {
         const method = "POST"
         const headers = { "Content-Type": "application/json" }
         const body = loginCreds
-        const response = await fetch(`/login`, { method: method, withCredentials: true, headers: headers, body: JSON.stringify(body) })
+        const response = await fetch(`${baseURL}/login`, { method: method, withCredentials: true, headers: headers, body: JSON.stringify(body) })
         const data = await response.json()
 
 
