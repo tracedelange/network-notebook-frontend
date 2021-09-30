@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Redirect, useHistory } from 'react-router'
 import {Link } from 'react-router-dom'
-import { baseURL } from '../../Globals'
-import { signupUser } from './authFunctions'
+
 import Paper from '@mui/material/Paper';
 import { TextField } from '@mui/material';
 import { Button } from '@material-ui/core'
@@ -10,12 +8,11 @@ import { Button } from '@material-ui/core'
 
 const Signup = ({ handleSignUp }) => {
 
-    const history = useHistory()
 
     const [signUp, setSignUp] = useState({
         password: "",
         username: '',
-        confirmation: ''
+        password_confirmation: ''
     })
     const [blankPresent, setBlankPresent] = useState(true)
     const [errors, setErrors] = useState({})
@@ -85,8 +82,8 @@ const Signup = ({ handleSignUp }) => {
                         id="outlined-basic"
                         type='password'
                         label="Confirm Password"
-                        value={signUp.confirmation}
-                        name="confirmation"
+                        value={signUp.password_confirmation}
+                        name="password_confirmation"
                         onChange={handleChange}
                         variant="outlined"
                         sx={{
@@ -117,15 +114,3 @@ const Signup = ({ handleSignUp }) => {
 }
 
 export default Signup
-
-// const handleLoginSubmit = async (e) => {
-//     e.preventDefault()
-//     const method = "POST"
-//     const headers = { "Content-Type": "application/json" }
-//     const body = loginCreds
-//     const response = await fetch(`${baseURL}login`, { method: method, headers: headers, body: JSON.stringify(body) })
-//     const data = await response.json()
-
-
-//     ////console.log(data)
-// }

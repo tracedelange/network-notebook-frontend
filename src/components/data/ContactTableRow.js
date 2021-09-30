@@ -34,6 +34,9 @@ const ContactTableRow = ({item, header=false, orgs, reloadContacts}) => {
                 <div className={'col3 data-entry' + (header ? ' table-header' : '')}>
                 {header ? "Organization" : item.organization ? item.organization.name : 'N/A'}
                 </div>
+                <div className={'col4 data-entry' + (header ? ' table-header' : '')}>
+                {header ? "Notes" : item.note ? item.note : 'N/A'}
+                </div>
             </Paper>
         </li>
         </>

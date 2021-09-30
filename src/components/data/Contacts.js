@@ -15,7 +15,7 @@ const Contacts = () => {
             if (response) {
                 setContactData(response)
             } else {
-                ////console.log('We got a problem houston')
+                //////console.log('We got a problem houston')
             }
         })
     }
@@ -27,12 +27,12 @@ const Contacts = () => {
             if (response) {
                 setContactData(response)
             } else {
-                ////console.log('We got a problem houston')
+                //////console.log('We got a problem houston')
             }
         })
     }, [])
 
-
+    //console.log(contactData)
 
     return (
         <div>

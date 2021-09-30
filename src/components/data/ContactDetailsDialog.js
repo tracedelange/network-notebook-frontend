@@ -6,8 +6,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import plusIcon from '../../assets/add.png'
-import { MenuItem, InputLabel, Select } from '@mui/material';
+import { InputLabel, Select } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import { updateContact, deleteContact } from '../../fetchFunctions'
 
@@ -16,29 +15,27 @@ export default function ContactDetailsDialog({ active, handleClose, data, orgs, 
 
     const [updated, setUpdated] = useState(false)
     const [updatedContact, setUpdatedContact] = useState({})
-    const [selectedOrg, setSelectedOrg] = useState({})
-
+    // const [selectedOrg, setSelectedOrg] = useState({})
+    const [orgList, setOrgList] = useState([])
 
     const handleFormChange = (e) => {
         setUpdated(true) //maybe add a check to see if updatedContact === Item, in which case updated = false
 
-        //console.log(e.target.id)
+        ////console.log(e.target.id)
         setUpdatedContact({
             ...updatedContact,
             [e.target.id]: e.target.value
         })
-
-
-
-
     }
 
-    const orgList = orgs.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)
-    //console.log('updated contact:')
-    //console.log(updatedContact)
+    useEffect(() => {
 
-    //console.log('contact data:')
-    //console.log(data)
+        if (Array.isArray(orgs)) {
+            setOrgList(orgs.map((item) => <option key={item.id} value={item.id}>{item.name}</option>))
+        }
+
+    }, [orgs])
+
 
     const handleUpdateSubmission = () => {
 
@@ -52,11 +49,11 @@ export default function ContactDetailsDialog({ active, handleClose, data, orgs, 
         updateContact(contactBody, data.id)
         .then(response => {
             if (response.firstname){
-                console.log('that worked')
+                //console.log('that worked')
                 reloadContacts()
             } else {
-                console.log('looks like we boofed it')
-                console.log('TODO: Add error handling for this case')
+                //console.log('looks like we boofed it')
+                //console.log('TODO: Add error handling for this case')
             }
         })
         handleClose()
@@ -67,7 +64,6 @@ export default function ContactDetailsDialog({ active, handleClose, data, orgs, 
         reloadContacts()
     }
 
-    console.log(updatedContact)
 
     return (
         <div>
@@ -99,10 +95,10 @@ export default function ContactDetailsDialog({ active, handleClose, data, orgs, 
                     />
                     <TextField
                         margin="dense"
-                        id="notes"
+                        id="note"
                         label="Notes"
                         type="text"
-                        defaultValue={data.notes}
+                        defaultValue={data.note}
                         multiline
                         maxRows={4}
                         fullWidth
@@ -121,11 +117,11 @@ export default function ContactDetailsDialog({ active, handleClose, data, orgs, 
                             // defaultValue={data.organization}
                             label="Organization"
                             onChange={handleFormChange}
-                            defaultValue={data.organization.id}
+                            defaultValue={data.organization ? data.organization.id : -1}
                             
                         >
                             {orgList}
-                            <option value={''}>Add Later</option>
+                            <option value={-1}>Add Later</option>
                         </Select>
                     </FormControl>
 

@@ -130,6 +130,7 @@ code {
 .sidebar-link {
   text-decoration: none;
   color: black;
+  margin: 10%;
 }
 
 .main-content-item-list {
@@ -137,7 +138,7 @@ code {
   margin: 0%;
 }
 .main-content-item-list li{
-  font-size: 6vmin;
+  font-size: 7vmin;
   padding-left: 10vw;
   padding-top: 4%;
 
@@ -200,6 +201,24 @@ code {
 }
 .col3 {
   width: 30vw;
+  font-size: 2vmin;
+}
+
+.col4 {
+  width: 30vw;
+  font-size: 1.5vmin;
+}
+
+.col8 {
+  margin-left: 10vw;
+  width: 50vw;
+  
+}
+
+.col9 {
+  
+  width: 50vw;
+  text-align: center;
 }
 
 .data-entry:hover{
@@ -210,6 +229,7 @@ code {
 
 .table-header {
   font-weight: 700;
+  font-size: 3vmin;
 }
 
 .add-new-contact {
@@ -248,3 +268,32 @@ code {
   border: solid 1px #ECFEF8;
 }
 
+.profile-page h1 {
+  opacity: 0.9;
+}
+.profile-page h1 {
+  padding-top: 2%;
+  padding-bottom: 2%;
+  text-align: center;
+}
+
+.profile-page ul {
+  width: 50%;
+  margin-left: 15%;
+  border: solid 1px #ECFEF8
+}
+
+.profile-page ul li{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.profile-page ul li h3{
+  font-size: 3vmin;
+  opacity: 0.9;
+}
+
+.login h3{
+  opacity: 0.8;
+  font-size: 2.5vmin;
+}

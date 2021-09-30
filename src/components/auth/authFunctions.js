@@ -1,4 +1,3 @@
-import { Redirect } from "react-router"
 
 export const checkIfUserLoggedIn = async () => {
 
@@ -10,11 +9,11 @@ export const checkIfUserLoggedIn = async () => {
         headers: headers,
     })
     const data = await response.json()
-    // ////console.log(response)
+    // //////console.log(response)
     if (response.ok) {
         return data
     } else {
-        ////console.log("No user logged in.")
+        //////console.log("No user logged in.")
     }
 
 }
@@ -29,13 +28,6 @@ export const logoutUser = async () => {
         withCredentials: true,
         headers: headers,
     })
-    // const data = await response.json()
-    // ////console.log(response)
-    // if (response.ok) {
-    //     return data
-    // } else {
-    //     ////console.log("Fetch Failed")
-    // }
 
 }
 
@@ -49,12 +41,8 @@ export const signupUser = async (signUp) => {
     const data = await response.json()
 
 
-    if (response.ok) {
-        return data
-        
-    } else {
-        ////console.log("Profile Creation Failed")
-        return response
-    }
+    return response, data
+
+
 
 }

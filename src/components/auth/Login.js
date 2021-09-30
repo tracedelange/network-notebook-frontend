@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { baseURL } from '../../Globals'
 import { Link } from 'react-router-dom'
 import Paper from '@mui/material/Paper';
 import { TextField } from '@mui/material';
@@ -27,7 +26,8 @@ const Login = ({ updateUserState }) => {
         if (response.ok) {
 
             updateUserState(data)
-            ////console.log(data)
+            setErrors({})
+            //////console.log(data)
         } else {
             setErrors(data)
         }
@@ -36,8 +36,8 @@ const Login = ({ updateUserState }) => {
     }
 
     const handleFormChange = (e) => {
-        // ////console.log(e.target.value)
-        // ////console.log(e.target.name)
+        // //////console.log(e.target.value)
+        // //////console.log(e.target.name)
 
         setLoginCreds({
             ...loginCreds,
@@ -117,8 +117,11 @@ const Login = ({ updateUserState }) => {
                 </form>
 
                 <span id='no-account'>No Account? <Link to='/signup'>Register</Link></span>
+                <h3 className='reminder'>Usernames are case-sensitive</h3>
                 {errors ? 
-                <h2 className='error'>{errors.errors}</h2>
+                <>
+                    <h2 className='error'>{errors.errors}</h2>
+                </>
                 :
                 null
                 }

@@ -45,12 +45,14 @@ function App() {
   const handleSignUp = (e, signUp) => {
     e.preventDefault()
     signupUser(signUp)
-      .then(data => {
-        if (data) {
-          setUserLoggedIn(true)
-          setUserInformation(data)
+      .then(response => {
+
+       //console.log(response)
+        if (response.errors) {
+         //console.log('Signup failed.')
         } else {
-          ////console.log('user sign up failed')
+            setUserInformation(response)
+            setUserLoggedIn(true)
         }
       })
 

@@ -1,10 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { Divider, Paper } from '@mui/material'
-import AddBoxIcon from '@mui/icons-material/AddBox';
 import ContactTableRow from './ContactTableRow';
-import plusIcon from '../../assets/add.png'
 import AddContactFormDialog from '../data/AddContactFormDialog'
-import ContactDetailsDialog from '../data/ContactDetailsDialog'
 import { getOrganizations } from '../../fetchFunctions';
 
 
@@ -21,12 +18,6 @@ const ContactTable = ({ data, reloadContacts }) => {
         })
     }, [])
     
-    
-    const handleRowClick = (e) => {
-        ////console.log(e.target.parentElement.parentElement.id)
-
-
-    }
     
     const ContactData = data.map((item) => <ContactTableRow reloadContacts={reloadContacts} orgs={organizations} key={item.id} item={item} />)
     return (

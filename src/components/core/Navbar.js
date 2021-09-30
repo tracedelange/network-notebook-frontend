@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Paper from '@mui/material/Paper';
-import menuIcon from '../../assets/menu.png'
 import Sidebar from '../core/Sidebar'
 import { Link } from 'react-router-dom'
 

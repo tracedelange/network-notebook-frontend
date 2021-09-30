@@ -7,10 +7,9 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import plusIcon from '../../assets/add.png'
-import { MenuItem, InputLabel, Select } from '@mui/material';
+import { InputLabel, Select } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import { submitContact } from '../../fetchFunctions'
-import { fontSize } from '@mui/system';
 
 
 export default function FormDialog({ data, orgs, reloadContacts }) {
@@ -26,7 +25,7 @@ export default function FormDialog({ data, orgs, reloadContacts }) {
     const [readyToSubmit, setReadyToSubmit] = useState(false)
     const [newContact, setNewContact] = useState(blankNewContact)
     const [selectedOrg, setSelectedOrg] = useState({
-        id: null,
+        id: -1,
         name: ''
     })
 
@@ -50,7 +49,7 @@ export default function FormDialog({ data, orgs, reloadContacts }) {
             })
         } else {
 
-            // //console.log(orgs)
+            // ////console.log(orgs)
             const id = orgs.find((item) => item.name === e.target.value)
             setNewContact({
                 ...newContact,
@@ -62,10 +61,10 @@ export default function FormDialog({ data, orgs, reloadContacts }) {
     }
 
 
-    const orgArray = orgs.map((item) => <MenuItem value={item.name} key={item.id}>{item.name}</MenuItem>)
+    const orgArray = orgs.map((item) => <option value={item.name} key={item.id}>{item.name}</option>)
 
 
-    //console.log(orgArray)
+    ////console.log(orgArray)
 
     const handleSubmit = () => {
 
@@ -74,11 +73,11 @@ export default function FormDialog({ data, orgs, reloadContacts }) {
                 if (data.firstname) {
                     reloadContacts()
                 } else {
-                    //console.log('looks like we boofed it')
-                    //console.log('TODO: Add error handling for this case')
+                    ////console.log('looks like we boofed it')
+                    ////console.log('TODO: Add error handling for this case')
                 }
             })
-        setSelectedOrg({ id: null, name: '' })
+        setSelectedOrg({ id: -1, name: '' })
         handleClose()
     }
 
@@ -89,6 +88,8 @@ export default function FormDialog({ data, orgs, reloadContacts }) {
             setReadyToSubmit(false)
         }
     }, [newContact, open])
+
+    //console.log(newContact)
 
     return (
         <div>
@@ -123,7 +124,7 @@ export default function FormDialog({ data, orgs, reloadContacts }) {
                     />
                     <TextField
                         margin="dense"
-                        id="notes"
+                        id="note"
                         label="Notes"
                         type="text"
                         fullWidth
@@ -138,15 +139,16 @@ export default function FormDialog({ data, orgs, reloadContacts }) {
                     <FormControl fullWidth>
                         <InputLabel id="org-label">Organization</InputLabel>
                         <Select
+                            native
                             labelId="org-label"
                             id="organization"
-                            value={selectedOrg.name}
+                            defaultValue={selectedOrg ? selectedOrg.id : -1}
                             label="Organization"
                             onChange={handleFormChange}
                             
                         >
                         {orgArray}
-                        <MenuItem value={''}>Add Later</MenuItem>
+                        <option value={-1}>Add Later</option>
                     </Select>
                 </FormControl>
             </DialogContent>
