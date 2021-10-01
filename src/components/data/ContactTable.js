@@ -5,13 +5,13 @@ import AddContactFormDialog from '../data/AddContactFormDialog'
 import { getOrganizations } from '../../fetchFunctions';
 
 
-const ContactTable = ({ data, reloadContacts }) => {
+const ContactTable = ({ data, reloadContacts, userToken }) => {
 
 
     const [organizations, setOrganizations] = useState({})
     const [dataLoaded, setDataLoaded] = useState(false)
     useEffect(()=> {
-        getOrganizations()
+        getOrganizations(userToken)
         .then(data => {
             setOrganizations(data)
             setDataLoaded(true)
@@ -19,7 +19,7 @@ const ContactTable = ({ data, reloadContacts }) => {
     }, [])
     
     
-    const ContactData = data.map((item) => <ContactTableRow reloadContacts={reloadContacts} orgs={organizations} key={item.id} item={item} />)
+    const ContactData = data.map((item) => <ContactTableRow userToken={userToken} reloadContacts={reloadContacts} orgs={organizations} key={item.id} item={item} />)
     return (
         <div>
             <Paper
@@ -35,7 +35,7 @@ const ContactTable = ({ data, reloadContacts }) => {
                 }}>
                 <div className='data-header-container'>
                     <h2 className='data-header'>Contacts</h2>
-                    {dataLoaded ? <AddContactFormDialog reloadContacts={reloadContacts} orgs={organizations} data={data} /> : null}
+                    {dataLoaded ? <AddContactFormDialog userToken={userToken} reloadContacts={reloadContacts} orgs={organizations} data={data} /> : null}
                 </div>
                 {/* <img src={plusIcon} className='add-new-contact-img' alt='Add New Contact' /> */}
                 <Divider />

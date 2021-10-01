@@ -11,7 +11,7 @@ import FormControl from '@mui/material/FormControl';
 import { updateContact, deleteContact } from '../../fetchFunctions'
 
 
-export default function ContactDetailsDialog({ active, handleClose, data, orgs, reloadContacts }) {
+export default function ContactDetailsDialog({ active, handleClose, data, orgs, reloadContacts, userToken }) {
 
     const [updated, setUpdated] = useState(false)
     const [updatedContact, setUpdatedContact] = useState({})
@@ -46,11 +46,11 @@ export default function ContactDetailsDialog({ active, handleClose, data, orgs, 
 
         delete contactBody.organization
 
-        updateContact(contactBody, data.id)
+        updateContact(contactBody, data.id, userToken)
         .then(response => {
             if (response.firstname){
                 //console.log('that worked')
-                reloadContacts()
+                reloadContacts(userToken)
             } else {
                 //console.log('looks like we boofed it')
                 //console.log('TODO: Add error handling for this case')
@@ -60,8 +60,12 @@ export default function ContactDetailsDialog({ active, handleClose, data, orgs, 
     }
 
     const handleDeleteClick = () => {
-        deleteContact(data.id)
-        reloadContacts()
+        deleteContact(data.id, userToken)
+        .then((data)=>{
+            console.log(data)
+            reloadContacts(userToken)
+            handleClose()
+        })
     }
 
 

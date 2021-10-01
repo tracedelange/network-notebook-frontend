@@ -4,10 +4,10 @@ import OrganizationTableRow from './OrganizationTableRow';
 import AddOrgFormDialog from './AddOrgFormDialog'
 
 
-const OrganizationTable = ({ data, reloadOrgs }) => {
+const OrganizationTable = ({ data, reloadOrgs, userToken }) => {
 
 
-    const organizationData = data.map((item) => <OrganizationTableRow reloadOrgs={reloadOrgs} item={item} key={item.id} />)
+    const organizationData = data.map((item) => <OrganizationTableRow userToken={userToken} reloadOrgs={reloadOrgs} item={item} key={item.id} />)
     return (
         <div>
             <Paper
@@ -23,7 +23,7 @@ const OrganizationTable = ({ data, reloadOrgs }) => {
                 }}>
                 <div className='data-header-container'>
                     <h2 className='data-header'>Organizations</h2>
-                    <AddOrgFormDialog reloadOrgs={reloadOrgs} />
+                    <AddOrgFormDialog userToken={userToken} reloadOrgs={reloadOrgs} />
                 </div>
 
                 <Divider />

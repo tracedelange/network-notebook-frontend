@@ -1,8 +1,8 @@
 import { baseURL } from "../../Globals"
-export const checkIfUserLoggedIn = async () => {
+export const checkIfUserLoggedIn = async (userToken) => {
 
     const method = "GET"
-    const headers = { "Content-Type": "application/json" }
+    const headers = { "Content-Type": "application/json", "Authorization": `Bearer ${userToken}` }
     const response = await fetch(`${baseURL}/me`, {
         method: method,
         withCredentials: true,

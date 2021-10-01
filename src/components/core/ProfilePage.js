@@ -8,7 +8,7 @@ const timeAgo = new TimeAgo('en-US')
  
 
 //do a call to the back end and determine if any user is currently logged in through baseURLme
-const ProfilePage = ({ userInfo }) => {
+const ProfilePage = ({ userInfo, userToken }) => {
     
 
    //console.log(userInfo.created_at)

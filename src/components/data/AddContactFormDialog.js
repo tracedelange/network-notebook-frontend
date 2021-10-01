@@ -12,7 +12,7 @@ import FormControl from '@mui/material/FormControl';
 import { submitContact } from '../../fetchFunctions'
 
 
-export default function FormDialog({ data, orgs, reloadContacts }) {
+export default function FormDialog({ data, orgs, reloadContacts, userToken }) {
 
     const blankNewContact = {
         firstname: '',
@@ -47,31 +47,40 @@ export default function FormDialog({ data, orgs, reloadContacts }) {
                 ...newContact,
                 [e.target.id]: e.target.value
             })
-        } else {
+            // } else {
 
-            // ////console.log(orgs)
-            const id = orgs.find((item) => item.name === e.target.value)
-            setNewContact({
-                ...newContact,
-                'organization_id': id.id
-            })
+            //     // ////console.log(orgs)
+            //     const id = orgs.find((item) => item.name === e.target.value)
+            //     setNewContact({
+            //         ...newContact,
+            //         'organization_id': id.id
+            //     })
 
-            setSelectedOrg(id)
+            //     setSelectedOrg(id)
+            // }
         }
+    }
+
+    const handleOrgChange = (e) => {
+        const id = orgs.find((item) => item.name === e.target.value)
+        setNewContact({
+            ...newContact,
+            'organization_id': id.id
+        })
     }
 
 
     const orgArray = orgs.map((item) => <option value={item.name} key={item.id}>{item.name}</option>)
 
 
-    ////console.log(orgArray)
+
 
     const handleSubmit = () => {
 
-        submitContact(newContact)
+        submitContact(newContact, userToken)
             .then((data) => {
                 if (data.firstname) {
-                    reloadContacts()
+                    reloadContacts(userToken)
                 } else {
                     ////console.log('looks like we boofed it')
                     ////console.log('TODO: Add error handling for this case')
@@ -89,7 +98,6 @@ export default function FormDialog({ data, orgs, reloadContacts }) {
         }
     }, [newContact, open])
 
-    //console.log(newContact)
 
     return (
         <div>
@@ -144,19 +152,19 @@ export default function FormDialog({ data, orgs, reloadContacts }) {
                             id="organization"
                             defaultValue={selectedOrg ? selectedOrg.id : -1}
                             label="Organization"
-                            onChange={handleFormChange}
-                            
+                            onChange={handleOrgChange}
+
                         >
-                        {orgArray}
-                        <option value={-1}>Add Later</option>
-                    </Select>
-                </FormControl>
-            </DialogContent>
-            <DialogActions>
-                <Button disabled={readyToSubmit ? false : true} onClick={handleSubmit}>Add Contact</Button>
-                <Button onClick={handleClose}>Cancel</Button>
-            </DialogActions>
-        </Dialog>
+                            {orgArray}
+                            <option value={-1}>Add Later</option>
+                        </Select>
+                    </FormControl>
+                </DialogContent>
+                <DialogActions>
+                    <Button disabled={readyToSubmit ? false : true} onClick={handleSubmit}>Add Contact</Button>
+                    <Button onClick={handleClose}>Cancel</Button>
+                </DialogActions>
+            </Dialog>
         </div >
     );
 }

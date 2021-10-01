@@ -6,7 +6,6 @@ import Homepage from './components/core/Homepage';
 import ProfilePage from './components/core/ProfilePage';
 import { checkIfUserLoggedIn, signupUser } from './components/auth/authFunctions';
 import Navbar from './components/core/Navbar';
-import { logoutUser } from './components/auth/authFunctions'
 import Paper from '@mui/material/Paper';
 import Organizations from './components/data/Organizations';
 import Contacts from './components/data/Contacts';
@@ -16,43 +15,59 @@ function App() {
 
   const [userLoggedIn, setUserLoggedIn] = useState(false)
   const [userInformation, setUserInformation] = useState({})
+  const [userToken, setUserToken] = useState('')
 
 
   const updateUserStateLogin = (userData) => {
-    setUserInformation(userData)
+
+    // console.log(userData.user)
+
+    localStorage.setItem("jwt", userData.jwt);
+    setUserToken(userData.jwt)
+    setUserInformation(userData.user)
     setUserLoggedIn(true)
   }
 
   //use effect on load, fetch backend and query rails to determine if rails knows if there is a user logged in, if yes, return json object and update state.
 
   useEffect(() => {
-    checkIfUserLoggedIn()
+
+    const jwtToken = localStorage.getItem('jwt')
+
+    if (jwtToken) {
+      checkIfUserLoggedIn(jwtToken)
       .then(data => {
-        if (data) {
-          setUserInformation(data)
-          setUserLoggedIn(true)
-        }
+        setUserInformation(data.user)
+        setUserToken(jwtToken)
+        setUserLoggedIn(true)
       })
+
+    } 
   }, [])
 
+  // True logout is being handled @ sidebar
+  // const handleLogout = () => {
+  //   // logoutUser()
+  //   localStorage.removeItem("jwt");
+  //   setUserLoggedIn(false)
+  //   setUserInformation({})
+  //   setUserToken(null)
 
-  const handleLogout = () => {
-    logoutUser()
-    setUserLoggedIn(false)
-    setUserInformation({})
-  }
+  // }
 
   const handleSignUp = (e, signUp) => {
     e.preventDefault()
     signupUser(signUp)
       .then(response => {
 
-       //console.log(response)
         if (response.errors) {
-         //console.log('Signup failed.')
+
+          console.log('Signup failed.')
         } else {
-            setUserInformation(response)
-            setUserLoggedIn(true)
+          localStorage.setItem("jwt", response.jwt);
+          setUserInformation(response.user)
+          setUserLoggedIn(true)
+          setUserToken(response.jwt)
         }
       })
 
@@ -61,7 +76,7 @@ function App() {
 
   return (
     <>
-      <Navbar handleLogout={handleLogout} loggedIn={userLoggedIn} />
+      <Navbar loggedIn={userLoggedIn} />
       <Paper
         elevation={5}
         sx={{
@@ -92,28 +107,28 @@ function App() {
           </Route>
           <Route exact path='/profile'>
             {userLoggedIn ?
-              <ProfilePage userInfo={userInformation} />
+              <ProfilePage userToken={userToken} userInfo={userInformation} />
               :
               <Redirect to='/login' />
             }
           </Route>
           <Route path='/home'>
             {userLoggedIn ?
-              <Homepage userInfo={userInformation} />
+              <Homepage userToken={userToken} userInfo={userInformation} />
               :
               <Redirect to='/login' />
             }
           </Route>
           <Route path='/organizations'>
             {userLoggedIn ?
-              <Organizations userInfo={userInformation} />
+              <Organizations userToken={userToken} userInfo={userInformation} />
               :
               <Redirect to='/login' />
             }
           </Route>
           <Route path='/contacts'>
             {userLoggedIn ?
-              <Contacts userInfo={userInformation} />
+              <Contacts userToken={userToken} userInfo={userInformation} />
               :
               <Redirect to='/login' />
             }

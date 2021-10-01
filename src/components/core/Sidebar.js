@@ -23,7 +23,7 @@ export default function TemporaryDrawer() {
     };
 
     const handleLogout = () => {
-        logoutUser()
+        localStorage.removeItem('jwt')
         window.location.reload(true)
     }
 

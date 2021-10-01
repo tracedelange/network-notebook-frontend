@@ -4,6 +4,7 @@ const capitalize = (string) => {
 }
 
 const baseURL = 'https://network-notebook-backend.herokuapp.com'
+// const baseURL = 'http://localhost:3001'
 
 export {baseURL}
 export {capitalize}

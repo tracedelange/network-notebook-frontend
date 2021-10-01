@@ -3,7 +3,7 @@ import React from 'react'
 import { capitalize } from '../../Globals'
 import { NavLink } from 'react-router-dom'
 
-const Homepage = ({ userInfo }) => {
+const Homepage = ({ userInfo, userToken }) => {
 
 
     return (

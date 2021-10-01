@@ -9,7 +9,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { updateOrg, deleteOrg } from '../../fetchFunctions'
 
 
-export default function OrganizationDetailsDialog({ active, handleClose, data, orgs, reloadOrgs }) {
+export default function OrganizationDetailsDialog({ active, userToken, handleClose, data, orgs, reloadOrgs }) {
 
     const [updated, setUpdated] = useState(false)
     const [updatedOrganization, setUpdatedOrganization] = useState({})
@@ -27,11 +27,11 @@ export default function OrganizationDetailsDialog({ active, handleClose, data, o
 
         // //console.log(data.id)
 
-        updateOrg(updatedOrganization, data.id)
+        updateOrg(updatedOrganization, data.id, userToken)
         .then(response => {
             if (response.name){
                 // //console.log('that worked')
-                reloadOrgs()
+                reloadOrgs(userToken)
             } else {
                 //console.log('looks like we boofed it')
                 //console.log('TODO: Add error handling for this case')
@@ -43,8 +43,11 @@ export default function OrganizationDetailsDialog({ active, handleClose, data, o
     }
 
     const handleDeleteClick = () => {
-        deleteOrg(data.id)
-        reloadOrgs()
+        deleteOrg(data.id, userToken)
+        .then(()=>{
+            reloadOrgs(userToken)
+            handleClose()
+        })
     }
 
     // //console.log(updatedContact)

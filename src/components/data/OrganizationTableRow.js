@@ -3,7 +3,7 @@ import {Paper} from '@mui/material'
 import OrganizationDetailsDialog from './OrganizationDetailsDialog'
 
 
-const OrganizationTableRow = ({item, header=false, reloadOrgs}) => {
+const OrganizationTableRow = ({item, header=false, reloadOrgs, userToken}) => {
 
 
     const [detailsActive, setDetailsActive] = useState(false)
@@ -11,7 +11,7 @@ const OrganizationTableRow = ({item, header=false, reloadOrgs}) => {
 
     return (
         <>
-        {header ? null : <OrganizationDetailsDialog reloadOrgs={reloadOrgs} data={item} active={detailsActive} handleClose={()=>{setDetailsActive(false)}} />}
+        {header ? null : <OrganizationDetailsDialog reloadOrgs={reloadOrgs} data={item} active={detailsActive} userToken={userToken} handleClose={()=>{setDetailsActive(false)}} />}
         <li onClick={()=> {setDetailsActive(true)}} id={header ? 'header' : item.id} key={header ? 'header' : item.id} >
 
             <Paper

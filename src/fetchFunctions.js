@@ -1,10 +1,10 @@
 import { baseURL } from "./Globals"
 
-export const getContacts = async () => {
+export const getContacts = async (userToken) => {
 
 
     const method = "GET"
-    const headers = { "Content-Type": "application/json" }
+    const headers = { "Content-Type": "application/json", "Authorization": `Bearer ${userToken}` }
     const response = await fetch(`${baseURL}/contacts`, { method: method, withCredentials: true, headers: headers })
     const data = await response.json()
 
@@ -19,10 +19,10 @@ export const getContacts = async () => {
 
 }
 
-export const getOrganizations = async () => {
+export const getOrganizations = async (userToken) => {
 
     const method = "GET"
-    const headers = { "Content-Type": "application/json" }
+    const headers = { "Content-Type": "application/json", "Authorization": `Bearer ${userToken}`  }
     const response = await fetch(`${baseURL}/organizations`, { method: method, withCredentials: true, headers: headers })
     const data = await response.json()
 
@@ -38,10 +38,10 @@ export const getOrganizations = async () => {
 }
 
 
-export const submitContact = async (contact) => {
+export const submitContact = async (contact, userToken) => {
 
     const method = "POST"
-    const headers = { "Content-Type": "application/json" }
+    const headers = { "Content-Type": "application/json", "Authorization": `Bearer ${userToken}`  }
     const response = await fetch(`${baseURL}/contacts`, { method: method, withCredentials: true, headers: headers, body: JSON.stringify(contact) })
     const data = await response.json()
 
@@ -56,10 +56,10 @@ export const submitContact = async (contact) => {
 
 }
 
-export const updateContact = async (contact, id) => {
+export const updateContact = async (contact, id, userToken) => {
 
     const method = "PATCH"
-    const headers = { "Content-Type": "application/json" }
+    const headers = { "Content-Type": "application/json", "Authorization": `Bearer ${userToken}`  }
     const response = await fetch(`${baseURL}/contacts/${id}`, { method: method, withCredentials: true, headers: headers, body: JSON.stringify(contact) })
     const data = await response.json()
 
@@ -75,15 +75,15 @@ export const updateContact = async (contact, id) => {
 }
 
 
-export const deleteContact = async (id) => {
+export const deleteContact = async (id, userToken) => {
 
     const method = "DELETE"
-    const headers = { "Content-Type": "application/json" }
+    const headers = { "Content-Type": "application/json", "Authorization": `Bearer ${userToken}`  }
     const response = await fetch(`${baseURL}/contacts/${id}`, { method: method, withCredentials: true, headers: headers })
-    const data = await response.json()
+    // const data = await response.json()
 
     if (response.ok) {
-        return data
+        return response
         
     } else {
         //////console.log(response)
@@ -92,10 +92,10 @@ export const deleteContact = async (id) => {
     }
 
 }
-export const submitOrg = async (organization) => {
+export const submitOrg = async (organization, userToken) => {
 
     const method = "POST"
-    const headers = { "Content-Type": "application/json" }
+    const headers = { "Content-Type": "application/json", "Authorization": `Bearer ${userToken}`  }
     const response = await fetch(`${baseURL}/organizations`, { method: method, withCredentials: true, headers: headers, body: JSON.stringify(organization) })
     const data = await response.json()
 
@@ -110,10 +110,10 @@ export const submitOrg = async (organization) => {
 
 }
 
-export const updateOrg = async (organization, id) => {
+export const updateOrg = async (organization, id, userToken) => {
 
     const method = "PATCH"
-    const headers = { "Content-Type": "application/json" }
+    const headers = { "Content-Type": "application/json", "Authorization": `Bearer ${userToken}`  }
     const response = await fetch(`${baseURL}/organizations/${id}`, { method: method, withCredentials: true, headers: headers, body: JSON.stringify(organization) })
     const data = await response.json()
 
@@ -129,12 +129,12 @@ export const updateOrg = async (organization, id) => {
 }
 
 
-export const deleteOrg = async (id) => {
+export const deleteOrg = async (id, userToken) => {
 
     const method = "DELETE"
-    const headers = { "Content-Type": "application/json" }
+    const headers = { "Content-Type": "application/json", "Authorization": `Bearer ${userToken}`  }
     const response = await fetch(`${baseURL}/organizations/${id}`, { method: method, withCredentials: true, headers: headers })
-    // const data = await response.json()
+
 
     if (response.ok) {
         return response

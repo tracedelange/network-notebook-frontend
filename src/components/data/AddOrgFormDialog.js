@@ -11,7 +11,7 @@ import { submitOrg } from '../../fetchFunctions'
 
 
 
-export default function FormDialog({ reloadOrgs }) {
+export default function FormDialog({ reloadOrgs, userToken }) {
 
     const blankNewOrg = {
         name: ""
@@ -39,10 +39,10 @@ export default function FormDialog({ reloadOrgs }) {
 
     const handleSubmit = () => {
 
-        submitOrg(newOrg)
+        submitOrg(newOrg, userToken)
             .then((data) => {
                 if (data.name) {
-                    reloadOrgs()
+                    reloadOrgs(userToken)
                 } else {
                     ////console.log('looks like we boofed it')
                     ////console.log('TODO: Add error handling for this case')

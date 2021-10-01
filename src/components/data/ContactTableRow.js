@@ -3,7 +3,7 @@ import {Paper} from '@mui/material'
 import ContactDetailsDialog from '../data/ContactDetailsDialog'
 
 
-const ContactTableRow = ({item, header=false, orgs, reloadContacts}) => {
+const ContactTableRow = ({item, header=false, orgs, reloadContacts, userToken}) => {
 
 
     const [detailsActive, setDetailsActive] = useState(false)
@@ -14,7 +14,7 @@ const ContactTableRow = ({item, header=false, orgs, reloadContacts}) => {
 
     return (
         <>
-        {header ? null : <ContactDetailsDialog reloadContacts={reloadContacts} orgs={orgs} data={item} active={detailsActive} handleClose={()=>{setDetailsActive(false)}} />}
+        {header ? null : <ContactDetailsDialog userToken={userToken} reloadContacts={reloadContacts} orgs={orgs} data={item} active={detailsActive} handleClose={()=>{setDetailsActive(false)}} />}
         <li onClick={()=> {setDetailsActive(true)}} id={header ? 'header' : item.id} key={header ? 'header' : item.id} >
 
             <Paper
